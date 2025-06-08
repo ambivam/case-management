@@ -1,0 +1,33 @@
+yarn run v1.22.22
+$ next dev
+  ▲ Next.js 14.2.28
+  - Local:        http://localhost:3000
+  - Environments: .env
+  - Experiments (use with caution):
+    · outputFileTracingRoot
+
+ ✓ Starting...
+ ✓ Ready in 1258ms
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 658ms (169 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 3.4s (677 modules)
+ GET / 200 in 3825ms
+ GET / 200 in 3827ms
+ ✓ Compiled in 504ms (341 modules)
+ GET / 200 in 69ms
+ ✓ Compiled /api/auth/me in 471ms (448 modules)
+ GET /api/auth/me 401 in 615ms
+ GET /api/auth/me 401 in 18ms
+ GET / 200 in 67ms
+ GET / 200 in 28ms
+ GET / 200 in 26ms
+ GET /api/auth/me 401 in 18ms
+ GET /api/auth/me 401 in 17ms
+ ○ Compiling /register ...
+ ✓ Compiled /register in 699ms (734 modules)
+ ✓ Compiled /login in 290ms (742 modules)
+ ✓ Compiled /api/auth/login in 158ms (492 modules)
+ POST /api/auth/login 200 in 654ms
+ POST /api/auth/login 200 in 336ms
+[?25h

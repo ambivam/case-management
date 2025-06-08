@@ -1,0 +1,66 @@
+ ⨯ ./app/login/page.tsx
+Error: 
+  [31mx[0m Expected a semicolon
+    ,-[[36;1;4m/home/ubuntu/case-management-system/app/app/login/page.tsx[0m:69:1]
+ [2m69[0m |           }
+ [2m70[0m |         }, 1000); // 1 second delay to show the toast
+ [2m71[0m |       }
+ [2m72[0m |       } else {
+    : [31;1m        ^[0m
+ [2m73[0m |         setError(data.error || 'Login failed');
+ [2m74[0m |       }
+ [2m75[0m |     } catch (error) {
+    `----
+
+  [31mx[0m Expression expected
+    ,-[[36;1;4m/home/ubuntu/case-management-system/app/app/login/page.tsx[0m:69:1]
+ [2m69[0m |           }
+ [2m70[0m |         }, 1000); // 1 second delay to show the toast
+ [2m71[0m |       }
+ [2m72[0m |       } else {
+    : [31;1m        ^^^^[0m
+ [2m73[0m |         setError(data.error || 'Login failed');
+ [2m74[0m |       }
+ [2m75[0m |     } catch (error) {
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/login/page.tsx
+ ⨯ ./app/login/page.tsx
+Error: 
+  [31mx[0m Expected a semicolon
+    ,-[[36;1;4m/home/ubuntu/case-management-system/app/app/login/page.tsx[0m:69:1]
+ [2m69[0m |           }
+ [2m70[0m |         }, 1000); // 1 second delay to show the toast
+ [2m71[0m |       }
+ [2m72[0m |       } else {
+    : [31;1m        ^[0m
+ [2m73[0m |         setError(data.error || 'Login failed');
+ [2m74[0m |       }
+ [2m75[0m |     } catch (error) {
+    `----
+
+  [31mx[0m Expression expected
+    ,-[[36;1;4m/home/ubuntu/case-management-system/app/app/login/page.tsx[0m:69:1]
+ [2m69[0m |           }
+ [2m70[0m |         }, 1000); // 1 second delay to show the toast
+ [2m71[0m |       }
+ [2m72[0m |       } else {
+    : [31;1m        ^^^^[0m
+ [2m73[0m |         setError(data.error || 'Login failed');
+ [2m74[0m |       }
+ [2m75[0m |     } catch (error) {
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/login/page.tsx
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename '/home/ubuntu/case-management-system/app/.next/cache/webpack/client-development-fallback/0.pack.gz_' -> '/home/ubuntu/case-management-system/app/.next/cache/webpack/client-development-fallback/0.pack.gz'

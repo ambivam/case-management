@@ -1,0 +1,348 @@
+
+generator client {
+    provider = "prisma-client-js"
+    binaryTargets = ["native"]
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  // Role must be one of: CUSTOMER, MERCHANT, COMMERCIAL
+  role      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  createdCases     Case[]           @relation("CaseCreator")
+  assignedCases    CaseAssignment[]
+  messages         Message[]
+  documents        Document[]
+  
+  // Ticket relations
+  createdTickets   Ticket[]         @relation("TicketCreator")
+  assignedTickets  Ticket[]         @relation("TicketAssignee")
+  ticketMessages   TicketMessage[]  @relation("TicketMessageAuthor")
+  ticketActivities TicketActivity[] @relation("TicketActivityUser")
+  
+  // Knowledge base relations
+  articles         KnowledgeBaseArticle[] @relation("ArticleAuthor")
+  articleRatings   ArticleRating[]  @relation("ArticleRatingUser")
+  
+  // Notification relations
+  notifications    Notification[]   @relation("UserNotifications")
+
+  @@map("users")
+}
+
+model Case {
+  id          String     @id @default(cuid())
+  title       String
+  description String
+  status      String @default("OPEN")
+  // Priority must be one of: LOW, MEDIUM, HIGH, CRITICAL, URGENT
+  priority    String   @default("MEDIUM")
+  // Type must be one of: ACCOUNT_ACCESS, BILLING_ISSUE, TECHNICAL_SUPPORT, FEATURE_REQUEST, BUG_REPORT, DISPUTE_HANDLING, PRODUCT_COMPLIANCE, RETURN_FRAUD, INVENTORY_DISPUTE, LOGISTICS_DELIVERY
+  type        String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  resolvedAt  DateTime?
+
+  // Relations
+  creatorId   String
+  creator     User               @relation("CaseCreator", fields: [creatorId], references: [id])
+  assignments CaseAssignment[]
+  messages    Message[]
+  documents   Document[]
+
+  @@map("cases")
+}
+
+model CaseAssignment {
+  id       String           @id @default(cuid())
+  caseId   String
+  userId   String
+  role     String
+  assignedAt DateTime       @default(now())
+
+  // Relations
+  case     Case             @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  user     User             @relation(fields: [userId], references: [id])
+
+  @@unique([caseId, userId])
+  @@map("case_assignments")
+}
+
+model Message {
+  id        String      @id @default(cuid())
+  content   String
+  isInternal Boolean    @default(false)
+  createdAt DateTime    @default(now())
+
+  // Relations
+  caseId    String
+  authorId  String
+  case      Case        @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  author    User        @relation(fields: [authorId], references: [id])
+
+  @@map("messages")
+}
+
+model Document {
+  id        String   @id @default(cuid())
+  filename  String
+  filepath  String
+  filesize  Int
+  mimetype  String
+  createdAt DateTime @default(now())
+
+  // Relations
+  caseId    String?
+  ticketId  String?
+  uploaderId String
+  case      Case?    @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  ticket    Ticket?  @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  uploader  User     @relation(fields: [uploaderId], references: [id])
+
+  @@map("documents")
+}
+
+// Enhanced Ticket Management System
+model Ticket {
+  id          String        @id @default(cuid())
+  title       String
+  description String
+  status      String  @default("OPEN")
+  priority    String @default("MEDIUM")
+  source      String  @default("WEB")
+  dueDate     DateTime?
+  resolvedAt  DateTime?
+  closedAt    DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // SLA tracking
+  slaBreached Boolean       @default(false)
+  slaDueDate  DateTime?
+  
+  // Relations
+  creatorId   String
+  assigneeId  String?
+  categoryId  String?
+  templateId  String?
+  
+  creator     User          @relation("TicketCreator", fields: [creatorId], references: [id])
+  assignee    User?         @relation("TicketAssignee", fields: [assigneeId], references: [id])
+  category    TicketCategory? @relation(fields: [categoryId], references: [id])
+  template    TicketTemplate? @relation(fields: [templateId], references: [id])
+  
+  tags        TicketTag[]
+  messages    TicketMessage[]
+  documents   Document[]
+  activities  TicketActivity[]
+  
+  @@map("tickets")
+}
+
+model TicketCategory {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  color       String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  
+  tickets     Ticket[]
+  templates   TicketTemplate[]
+  slaRules    SLARule[]
+  
+  @@map("ticket_categories")
+}
+
+model TicketTag {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  color     String?
+  createdAt DateTime @default(now())
+  
+  tickets   Ticket[]
+  
+  @@map("ticket_tags")
+}
+
+model TicketTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  title       String
+  description String
+  priority    String @default("MEDIUM")
+  categoryId  String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  category    TicketCategory? @relation(fields: [categoryId], references: [id])
+  tickets     Ticket[]
+  
+  @@map("ticket_templates")
+}
+
+model TicketMessage {
+  id         String    @id @default(cuid())
+  content    String
+  isInternal Boolean   @default(false)
+  isSystem   Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  
+  // Relations
+  ticketId   String
+  authorId   String?
+  ticket     Ticket    @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  author     User?     @relation("TicketMessageAuthor", fields: [authorId], references: [id])
+  
+  @@map("ticket_messages")
+}
+
+model TicketActivity {
+  id          String   @id @default(cuid())
+  action      String
+  description String
+  metadata    String?
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  ticketId    String
+  userId      String?
+  ticket      Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  user        User?    @relation("TicketActivityUser", fields: [userId], references: [id])
+  
+  @@map("ticket_activities")
+}
+
+// SLA Management
+model SLARule {
+  id              String         @id @default(cuid())
+  name            String
+  description     String?
+  priority        String
+  responseTime    Int            // in minutes
+  resolutionTime  Int            // in minutes
+  isActive        Boolean        @default(true)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  
+  // Relations
+  categoryId      String?
+  category        TicketCategory? @relation(fields: [categoryId], references: [id])
+  
+  @@map("sla_rules")
+}
+
+// Knowledge Base System
+model KnowledgeBaseArticle {
+  id          String            @id @default(cuid())
+  title       String
+  content     String
+  summary     String?
+  slug        String            @unique
+  status      String     @default("DRAFT")
+  viewCount   Int               @default(0)
+  rating      Float?
+  ratingCount Int               @default(0)
+  isPublic    Boolean           @default(true)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  publishedAt DateTime?
+  
+  // Relations
+  authorId    String
+  categoryId  String?
+  author      User              @relation("ArticleAuthor", fields: [authorId], references: [id])
+  category    ArticleCategory?  @relation(fields: [categoryId], references: [id])
+  
+  tags        ArticleTag[]
+  ratings     ArticleRating[]
+  
+  @@map("knowledge_base_articles")
+}
+
+model ArticleCategory {
+  id          String                @id @default(cuid())
+  name        String                @unique
+  description String?
+  slug        String                @unique
+  parentId    String?
+  isActive    Boolean               @default(true)
+  sortOrder   Int                   @default(0)
+  createdAt   DateTime              @default(now())
+  
+  parent      ArticleCategory?      @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children    ArticleCategory[]     @relation("CategoryHierarchy")
+  articles    KnowledgeBaseArticle[]
+  
+  @@map("article_categories")
+}
+
+model ArticleTag {
+  id        String                @id @default(cuid())
+  name      String                @unique
+  color     String?
+  createdAt DateTime              @default(now())
+  
+  articles  KnowledgeBaseArticle[]
+  
+  @@map("article_tags")
+}
+
+model ArticleRating {
+  id        String   @id @default(cuid())
+  rating    Int      // 1-5 stars
+  comment   String?
+  createdAt DateTime @default(now())
+  
+  // Relations
+  articleId String
+  userId    String?
+  article   KnowledgeBaseArticle @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  user      User?    @relation("ArticleRatingUser", fields: [userId], references: [id])
+  
+  @@unique([articleId, userId])
+  @@map("article_ratings")
+}
+
+// Notification System
+model Notification {
+  id        String           @id @default(cuid())
+  title     String
+  message   String
+  type      String
+  isRead    Boolean          @default(false)
+  metadata  String?
+  createdAt DateTime         @default(now())
+  readAt    DateTime?
+  
+  // Relations
+  userId    String
+  user      User             @relation("UserNotifications", fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("notifications")
+}
+
+
+
+
+
+
+
+
+
+
+
+// Validation constants for the API layer
+// See comments in the Case model for valid values

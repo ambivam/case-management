@@ -1,0 +1,66 @@
+yarn run v1.22.22
+$ next dev
+  ▲ Next.js 14.2.28
+  - Local:        http://localhost:3000
+  - Environments: .env
+  - Experiments (use with caution):
+    · outputFileTracingRoot
+
+ ✓ Starting...
+ ✓ Ready in 1621ms
+ ✓ Compiled /middleware in 256ms (169 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 2s (670 modules)
+ GET / 200 in 2415ms
+ ✓ Compiled in 487ms (341 modules)
+ ✓ Compiled /api/auth/me in 334ms (448 modules)
+ GET /api/auth/me 401 in 478ms
+ GET /api/auth/me 401 in 17ms
+Token verification failed for path: /customer token: eyJhbGciOiJIUzI1NiIs...
+ ○ Compiling /login ...
+ ✓ Compiled /login in 521ms (839 modules)
+ GET /login 200 in 689ms
+No token found for path: /customer
+ GET /login 200 in 33ms
+ ✓ Compiled in 160ms (169 modules)
+ GET /login 200 in 34ms
+ ✓ Compiled in 851ms (890 modules)
+ ✓ Compiled /api/test-auth in 155ms (469 modules)
+ GET /api/test-auth 200 in 258ms
+ ✓ Compiled in 220ms (638 modules)
+ ✓ Compiled in 70ms (72 modules)
+ ✓ Compiled in 95ms (169 modules)
+ ○ Compiling /customer ...
+ ✓ Compiled /customer in 812ms (867 modules)
+ GET /customer 200 in 928ms
+ GET /customer 200 in 30ms
+ ✓ Compiled /api/auth/register in 145ms (493 modules)
+ POST /api/auth/register 200 in 623ms
+ POST /api/auth/register 200 in 337ms
+ ✓ Compiled /api/auth/login in 144ms (495 modules)
+ POST /api/auth/login 200 in 505ms
+ ○ Compiling /merchant ...
+ ✓ Compiled /merchant in 723ms (891 modules)
+ GET /merchant 200 in 842ms
+ POST /api/auth/login 200 in 343ms
+ ✓ Compiled /commercial in 393ms (904 modules)
+ GET /commercial 200 in 470ms
+ GET /login 200 in 73ms
+ ✓ Compiled /api/auth/logout in 166ms (516 modules)
+ POST /api/auth/logout 200 in 212ms
+ GET /customer 200 in 52ms
+ ✓ Compiled / in 248ms (521 modules)
+ GET / 200 in 321ms
+ GET /login 200 in 40ms
+ ✓ Compiled /register in 446ms (933 modules)
+ GET /register 200 in 540ms
+ GET /customer 200 in 33ms
+ GET /merchant 200 in 35ms
+ GET /commercial 200 in 38ms
+ ✓ Compiled in 877ms (1100 modules)
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+[?25h

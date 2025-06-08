@@ -1,0 +1,70 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Testing
+coverage/
+
+# Next.js build output
+.next/
+out/
+
+# Production
+build/
+dist/
+
+# Environment Variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+
+# Database
+*.db
+*.db-journal
+app/prisma/dev.db
+app/prisma/dev.db-journal
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Cache
+.cache/
+.next/cache/
+
+# Keep these files
+!.gitignore
+!README.md
+!package.json
+!package-lock.json
+!tsconfig.json
+!next.config.js
+!postcss.config.js
+!tailwind.config.js
+!app/prisma/schema.prisma
+!app/prisma/migrations/

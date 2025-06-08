@@ -1,0 +1,62 @@
+yarn run v1.22.22
+$ next dev
+  ▲ Next.js 14.2.28
+  - Local:        http://localhost:3000
+  - Environments: .env
+  - Experiments (use with caution):
+    · outputFileTracingRoot
+
+ ✓ Starting...
+ ✓ Ready in 1651ms
+ ✓ Compiled /middleware in 228ms (169 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 1849ms (670 modules)
+ GET / 200 in 2240ms
+ ✓ Compiled in 478ms (341 modules)
+ ✓ Compiled /api/auth/me in 315ms (448 modules)
+ GET /api/auth/me 401 in 488ms
+ GET /api/auth/me 401 in 19ms
+ GET / 200 in 102ms
+ GET /api/auth/me 401 in 18ms
+ GET /api/auth/me 401 in 27ms
+ ○ Compiling /register ...
+ ✓ Compiled /register in 616ms (853 modules)
+ GET /register 200 in 788ms
+ GET /register 200 in 39ms
+ ✓ Compiled /api/auth/register in 220ms (489 modules)
+ POST /api/auth/register 500 in 371ms
+ POST /api/auth/register 200 in 351ms
+ ✓ Compiled /api/auth/login in 188ms (491 modules)
+ POST /api/auth/login 200 in 550ms
+ POST /api/auth/register 200 in 339ms
+ POST /api/auth/register 200 in 340ms
+ ✓ Compiled in 553ms (867 modules)
+ ✓ Compiled in 480ms (867 modules)
+ ✓ Compiled in 431ms (867 modules)
+ ✓ Compiled in 446ms (867 modules)
+ ✓ Compiled in 439ms (378 modules)
+ ✓ Compiled in 288ms (378 modules)
+ ✓ Compiled in 473ms (746 modules)
+ ✓ Compiled in 407ms (746 modules)
+ GET /register 200 in 111ms
+ ✓ Compiled /api/auth/register in 132ms (487 modules)
+ POST /api/auth/register 200 in 556ms
+ ✓ Compiled /api/auth/login in 117ms (489 modules)
+ POST /api/auth/login 200 in 471ms
+ POST /api/auth/register 200 in 340ms
+ POST /api/auth/register 200 in 332ms
+ ○ Compiling /login ...
+ ✓ Compiled /login in 526ms (863 modules)
+ GET /login 200 in 635ms
+ GET / 200 in 41ms
+ ✓ Compiled /api/auth/me in 152ms (496 modules)
+ GET /api/auth/me 401 in 195ms
+ GET /api/auth/me 401 in 20ms
+ ✓ Compiled in 517ms (877 modules)
+ GET / 200 in 63ms
+ GET /api/auth/me 401 in 31ms
+ GET /api/auth/me 401 in 17ms
+ GET / 200 in 29ms
+ GET /register 200 in 39ms
+ GET /login 200 in 30ms
+[?25h

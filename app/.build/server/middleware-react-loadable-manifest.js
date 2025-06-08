@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST='{"app/sla/page.tsx -> react-chartjs-2":{"id":432,"files":["static/chunks/432.0b314c464cd02542.js"]}}';

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        form { margin-bottom: 20px; }
+        input { margin: 5px; padding: 8px; width: 200px; }
+        button { padding: 8px 16px; margin: 5px; }
+        #result { margin-top: 20px; padding: 10px; border: 1px solid #ccc; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Login Flow Test</h1>
+    <form id="loginForm">
+        <div>
+            <input type="email" id="email" placeholder="Email" value="testuser@example.com" required>
+        </div>
+        <div>
+            <input type="password" id="password" placeholder="Password" value="password123" required>
+        </div>
+        <div>
+            <button type="submit">Test Login</button>
+        </div>
+    </form>
+    
+    <div id="result"></div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const resultDiv = document.getElementById('result');
+            
+            resultDiv.innerHTML = '<p>Testing login...</p>';
+            
+            try {
+                console.log('Attempting login with:', { email });
+                
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+                
+                const data = await response.json();
+                console.log('Login response:', data);
+                
+                if (response.ok) {
+                    resultDiv.className = 'success';
+                    resultDiv.innerHTML = `
+                        <h3>✅ Login Successful!</h3>
+                        <p><strong>User:</strong> ${data.user.name}</p>
+                        <p><strong>Email:</strong> ${data.user.email}</p>
+                        <p><strong>Role:</strong> ${data.user.role}</p>
+                        <p><strong>Redirect Target:</strong> /${data.user.role.toLowerCase()}</p>
+                        <p>Redirecting in 3 seconds...</p>
+                    `;
+                    
+                    // Simulate the redirection logic from the actual login page
+                    setTimeout(() => {
+                        let redirectUrl;
+                        switch (data.user.role) {
+                            case 'CUSTOMER':
+                                redirectUrl = '/customer';
+                                break;
+                            case 'MERCHANT':
+                                redirectUrl = '/merchant';
+                                break;
+                            case 'COMMERCIAL':
+                                redirectUrl = '/commercial';
+                                break;
+                            default:
+                                redirectUrl = '/';
+                        }
+                        
+                        console.log('Redirecting to:', redirectUrl);
+                        resultDiv.innerHTML += `<p><strong>Redirecting to: ${redirectUrl}</strong></p>`;
+                        
+                        // Perform the actual redirect
+                        window.location.href = redirectUrl;
+                    }, 3000);
+                } else {
+                    resultDiv.className = 'error';
+                    resultDiv.innerHTML = `
+                        <h3>❌ Login Failed</h3>
+                        <p><strong>Error:</strong> ${data.error}</p>
+                        <p><strong>Status:</strong> ${response.status}</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                resultDiv.className = 'error';
+                resultDiv.innerHTML = `
+                    <h3>❌ Network Error</h3>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

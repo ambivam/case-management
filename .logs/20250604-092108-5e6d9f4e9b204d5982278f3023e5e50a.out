@@ -1,0 +1,69 @@
+yarn run v1.22.22
+$ next dev
+  ▲ Next.js 14.2.28
+  - Local:        http://localhost:3000
+  - Environments: .env
+  - Experiments (use with caution):
+    · outputFileTracingRoot
+
+ ✓ Starting...
+ ✓ Ready in 1632ms
+ ✓ Compiled /middleware in 263ms (169 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 1776ms (670 modules)
+ GET / 200 in 2181ms
+ GET / 200 in 2183ms
+ ✓ Compiled in 473ms (341 modules)
+ GET / 200 in 36ms
+ ✓ Compiled /api/auth/me in 291ms (448 modules)
+ GET /api/auth/me 401 in 445ms
+ GET /api/auth/me 401 in 18ms
+ ○ Compiling /get-started ...
+ ✓ Compiled /get-started in 670ms (803 modules)
+ ○ Compiling /register ...
+ ✓ Compiled /register in 517ms (879 modules)
+ ✓ Compiled /login in 377ms (887 modules)
+ ✓ Compiled /api/auth/login in 171ms (508 modules)
+ POST /api/auth/login 200 in 638ms
+ GET / 200 in 89ms
+ GET /api/auth/me 401 in 22ms
+ GET /api/auth/me 401 in 18ms
+ ○ Compiling /learn-more ...
+ ✓ Compiled /learn-more in 884ms (944 modules)
+ GET /api/auth/me 401 in 39ms
+ GET /api/auth/me 401 in 18ms
+ POST /api/auth/login 200 in 368ms
+ GET / 200 in 97ms
+ GET / 200 in 34ms
+ GET / 200 in 33ms
+ GET / 200 in 31ms
+ GET / 200 in 31ms
+ GET /api/auth/me 401 in 24ms
+ GET /api/auth/me 401 in 20ms
+ GET / 200 in 35ms
+ GET / 200 in 30ms
+ GET / 200 in 29ms
+ GET /api/auth/me 401 in 21ms
+ GET /api/auth/me 401 in 21ms
+ ✓ Compiled in 1302ms (1004 modules)
+ ✓ Compiled in 917ms (1004 modules)
+ ✓ Compiled in 101ms (169 modules)
+ ✓ Compiled in 328ms (420 modules)
+ ✓ Compiled in 344ms (420 modules)
+ ✓ Compiled in 291ms (420 modules)
+ ✓ Compiled in 315ms (420 modules)
+ ✓ Compiled in 393ms (420 modules)
+ ✓ Compiled in 299ms (420 modules)
+ ✓ Compiled in 320ms (420 modules)
+ ✓ Compiled in 348ms (420 modules)
+ ✓ Compiled in 1116ms (1004 modules)
+ ✓ Compiled in 868ms (1004 modules)
+ ✓ Compiled in 849ms (1004 modules)
+ ✓ Compiled in 810ms (1004 modules)
+ ✓ Compiled in 383ms (420 modules)
+ ✓ Compiled in 318ms (420 modules)
+ ✓ Compiled in 383ms (420 modules)
+ ✓ Compiled in 378ms (420 modules)
+ ✓ Compiled in 387ms (420 modules)
+ ✓ Compiled in 313ms (420 modules)
+[?25h

@@ -1,0 +1,78 @@
+ ⚠ Compiled with warnings
+
+../node_modules/bcryptjs/dist/bcrypt.js
+A Node.js API is used (process.nextTick at line: 351) which is not supported in the Edge Runtime.
+Learn more: https://nextjs.org/docs/api-reference/edge-runtime
+
+Import trace for requested module:
+../node_modules/bcryptjs/dist/bcrypt.js
+./lib/auth.ts
+
+../node_modules/bcryptjs/dist/bcrypt.js
+A Node.js API is used (setImmediate at line: 352) which is not supported in the Edge Runtime.
+Learn more: https://nextjs.org/docs/api-reference/edge-runtime
+
+Import trace for requested module:
+../node_modules/bcryptjs/dist/bcrypt.js
+./lib/auth.ts
+
+../node_modules/bcryptjs/dist/bcrypt.js
+A Node.js API is used (setImmediate at line: 352) which is not supported in the Edge Runtime.
+Learn more: https://nextjs.org/docs/api-reference/edge-runtime
+
+Import trace for requested module:
+../node_modules/bcryptjs/dist/bcrypt.js
+./lib/auth.ts
+
+../node_modules/bcryptjs/dist/bcrypt.js
+A Node.js API is used (process.nextTick at line: 352) which is not supported in the Edge Runtime.
+Learn more: https://nextjs.org/docs/api-reference/edge-runtime
+
+Import trace for requested module:
+../node_modules/bcryptjs/dist/bcrypt.js
+./lib/auth.ts
+
+../node_modules/jsonwebtoken/lib/asymmetricKeyDetailsSupported.js
+A Node.js API is used (process.version at line: 3) which is not supported in the Edge Runtime.
+Learn more: https://nextjs.org/docs/api-reference/edge-runtime
+
+Import trace for requested module:
+../node_modules/jsonwebtoken/lib/asymmetricKeyDetailsSupported.js
+../node_modules/jsonwebtoken/lib/validateAsymmetricKey.js
+../node_modules/jsonwebtoken/sign.js
+../node_modules/jsonwebtoken/index.js
+./lib/auth.ts
+
+../node_modules/jsonwebtoken/lib/psSupported.js
+A Node.js API is used (process.version at line: 3) which is not supported in the Edge Runtime.
+Learn more: https://nextjs.org/docs/api-reference/edge-runtime
+
+Import trace for requested module:
+../node_modules/jsonwebtoken/lib/psSupported.js
+../node_modules/jsonwebtoken/sign.js
+../node_modules/jsonwebtoken/index.js
+./lib/auth.ts
+
+../node_modules/jsonwebtoken/lib/rsaPssKeyDetailsSupported.js
+A Node.js API is used (process.version at line: 3) which is not supported in the Edge Runtime.
+Learn more: https://nextjs.org/docs/api-reference/edge-runtime
+
+Import trace for requested module:
+../node_modules/jsonwebtoken/lib/rsaPssKeyDetailsSupported.js
+../node_modules/jsonwebtoken/lib/validateAsymmetricKey.js
+../node_modules/jsonwebtoken/sign.js
+../node_modules/jsonwebtoken/index.js
+./lib/auth.ts
+
+../node_modules/jws/lib/data-stream.js
+A Node.js API is used (process.nextTick at line: 29) which is not supported in the Edge Runtime.
+Learn more: https://nextjs.org/docs/api-reference/edge-runtime
+
+Import trace for requested module:
+../node_modules/jws/lib/data-stream.js
+../node_modules/jws/lib/sign-stream.js
+../node_modules/jws/index.js
+../node_modules/jsonwebtoken/decode.js
+../node_modules/jsonwebtoken/index.js
+./lib/auth.ts
+

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Flow Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        .test-button { background-color: #007bff; color: white; border: none; border-radius: 3px; }
+        .result { margin-top: 10px; padding: 10px; border-radius: 3px; }
+        pre { background-color: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Login Flow Test Suite</h1>
+    <p>This page tests the complete login flow including API calls and redirection logic.</p>
+    
+    <div class="test-section info">
+        <h3>📋 Test Instructions</h3>
+        <p>Click the test buttons below to verify the login flow for each user role:</p>
+        <ul>
+            <li><strong>Customer:</strong> customer@test.com / test123</li>
+            <li><strong>Merchant:</strong> merchant@test.com / test123</li>
+            <li><strong>Commercial:</strong> commercial@test.com / test123</li>
+        </ul>
+    </div>
+    
+    <div class="test-section">
+        <h3>🔐 Login API Tests</h3>
+        <button class="test-button" onclick="testLogin('customer@test.com', 'test123', 'CUSTOMER')">Test Customer Login</button>
+        <button class="test-button" onclick="testLogin('merchant@test.com', 'test123', 'MERCHANT')">Test Merchant Login</button>
+        <button class="test-button" onclick="testLogin('commercial@test.com', 'test123', 'COMMERCIAL')">Test Commercial Login</button>
+        <div id="loginResults"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>🔄 Redirection Logic Test</h3>
+        <button class="test-button" onclick="testRedirectionLogic()">Test All Redirection Logic</button>
+        <div id="redirectResults"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>🎯 End-to-End Test</h3>
+        <button class="test-button" onclick="testEndToEnd()">Run Complete E2E Test</button>
+        <div id="e2eResults"></div>
+    </div>
+    
+    <script>
+        async function testLogin(email, password, expectedRole) {
+            const resultsDiv = document.getElementById('loginResults');
+            resultsDiv.innerHTML = `<div class="result info">Testing login for ${email}...</div>`;
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password }),
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    const success = data.user.role === expectedRole;
+                    resultsDiv.innerHTML = `
+                        <div class="result ${success ? 'success' : 'error'}">
+                            <h4>✅ Login API Response</h4>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                            <p><strong>Expected Role:</strong> ${expectedRole}</p>
+                            <p><strong>Actual Role:</strong> ${data.user.role}</p>
+                            <p><strong>Status:</strong> ${success ? '✅ PASS' : '❌ FAIL'}</p>
+                        </div>
+                    `;
+                } else {
+                    resultsDiv.innerHTML = `
+                        <div class="result error">
+                            <h4>❌ Login Failed</h4>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="result error">
+                        <h4>❌ Network Error</h4>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function testRedirectionLogic() {
+            const resultsDiv = document.getElementById('redirectResults');
+            
+            const testCases = [
+                { role: 'CUSTOMER', expected: '/customer' },
+                { role: 'MERCHANT', expected: '/merchant' },
+                { role: 'COMMERCIAL', expected: '/commercial' },
+                { role: 'UNKNOWN', expected: '/' }
+            ];
+            
+            let results = '<h4>🔄 Redirection Logic Results</h4>';
+            
+            testCases.forEach(test => {
+                let redirectUrl;
+                switch (test.role) {
+                    case 'CUSTOMER': redirectUrl = '/customer'; break;
+                    case 'MERCHANT': redirectUrl = '/merchant'; break;
+                    case 'COMMERCIAL': redirectUrl = '/commercial'; break;
+                    default: redirectUrl = '/';
+                }
+                
+                const success = redirectUrl === test.expected;
+                results += `
+                    <div style="margin: 10px 0; padding: 10px; background-color: ${success ? '#d4edda' : '#f8d7da'}; border-radius: 3px;">
+                        <strong>Role:</strong> ${test.role} → 
+                        <strong>Expected:</strong> ${test.expected} → 
+                        <strong>Actual:</strong> ${redirectUrl} → 
+                        <strong>Status:</strong> ${success ? '✅ PASS' : '❌ FAIL'}
+                    </div>
+                `;
+            });
+            
+            resultsDiv.innerHTML = `<div class="result success">${results}</div>`;
+        }
+        
+        async function testEndToEnd() {
+            const resultsDiv = document.getElementById('e2eResults');
+            resultsDiv.innerHTML = '<div class="result info">Running end-to-end tests...</div>';
+            
+            const testUsers = [
+                { email: 'customer@test.com', password: 'test123', role: 'CUSTOMER', dashboard: '/customer' },
+                { email: 'merchant@test.com', password: 'test123', role: 'MERCHANT', dashboard: '/merchant' },
+                { email: 'commercial@test.com', password: 'test123', role: 'COMMERCIAL', dashboard: '/commercial' }
+            ];
+            
+            let allResults = '<h4>🎯 End-to-End Test Results</h4>';
+            let allPassed = true;
+            
+            for (const user of testUsers) {
+                try {
+                    // Step 1: Login
+                    const loginResponse = await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: user.email, password: user.password }),
+                    });
+                    
+                    const loginData = await loginResponse.json();
+                    
+                    if (loginResponse.ok && loginData.user.role === user.role) {
+                        // Step 2: Test dashboard access
+                        const cookies = loginResponse.headers.get('set-cookie');
+                        const authToken = cookies?.match(/auth-token=([^;]+)/)?.[1];
+                        
+                        if (authToken) {
+                            const dashboardResponse = await fetch(user.dashboard, {
+                                headers: { 'Cookie': `auth-token=${authToken}` }
+                            });
+                            
+                            const dashboardSuccess = dashboardResponse.status === 200;
+                            
+                            allResults += `
+                                <div style="margin: 10px 0; padding: 10px; background-color: ${dashboardSuccess ? '#d4edda' : '#f8d7da'}; border-radius: 3px;">
+                                    <strong>${user.role}:</strong> 
+                                    Login ✅ → 
+                                    Dashboard (${dashboardResponse.status}) ${dashboardSuccess ? '✅' : '❌'} → 
+                                    <strong>Status:</strong> ${dashboardSuccess ? '✅ PASS' : '❌ FAIL'}
+                                </div>
+                            `;
+                            
+                            if (!dashboardSuccess) allPassed = false;
+                        } else {
+                            allResults += `
+                                <div style="margin: 10px 0; padding: 10px; background-color: #f8d7da; border-radius: 3px;">
+                                    <strong>${user.role}:</strong> ❌ No auth token received
+                                </div>
+                            `;
+                            allPassed = false;
+                        }
+                    } else {
+                        allResults += `
+                            <div style="margin: 10px 0; padding: 10px; background-color: #f8d7da; border-radius: 3px;">
+                                <strong>${user.role}:</strong> ❌ Login failed
+                            </div>
+                        `;
+                        allPassed = false;
+                    }
+                } catch (error) {
+                    allResults += `
+                        <div style="margin: 10px 0; padding: 10px; background-color: #f8d7da; border-radius: 3px;">
+                            <strong>${user.role}:</strong> ❌ Error: ${error.message}
+                        </div>
+                    `;
+                    allPassed = false;
+                }
+            }
+            
+            allResults += `
+                <div style="margin: 20px 0; padding: 15px; background-color: ${allPassed ? '#d4edda' : '#f8d7da'}; border-radius: 5px; font-size: 18px; font-weight: bold;">
+                    🎯 Overall Result: ${allPassed ? '✅ ALL TESTS PASSED' : '❌ SOME TESTS FAILED'}
+                </div>
+            `;
+            
+            resultsDiv.innerHTML = `<div class="result ${allPassed ? 'success' : 'error'}">${allResults}</div>`;
+        }
+    </script>
+</body>
+</html>

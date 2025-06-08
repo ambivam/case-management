@@ -1,0 +1,55 @@
+yarn run v1.22.22
+$ next build
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+  ▲ Next.js 14.2.28
+  - Experiments (use with caution):
+    · outputFileTracingRoot
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Skipping linting
+   Checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/12) ...
+   Generating static pages (3/12) 
+   Generating static pages (6/12) 
+   Generating static pages (9/12) 
+ ✓ Generating static pages (12/12)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    4.25 kB         127 kB
+├ ○ /_not-found                          873 B            88 kB
+├ ƒ /api/auth/login                      0 B                0 B
+├ ƒ /api/auth/logout                     0 B                0 B
+├ ƒ /api/auth/me                         0 B                0 B
+├ ƒ /api/auth/register                   0 B                0 B
+├ ƒ /api/cases                           0 B                0 B
+├ ƒ /api/cases/my-cases                  0 B                0 B
+├ ƒ /api/commercial/metrics              0 B                0 B
+├ ƒ /api/merchant/metrics                0 B                0 B
+├ ○ /commercial                          6.7 kB          132 kB
+├ ○ /customer                            4.3 kB          130 kB
+├ ○ /customer/cases                      5.64 kB         138 kB
+├ ○ /customer/cases/new                  4.87 kB         137 kB
+├ ○ /login                               1.47 kB         136 kB
+├ ○ /merchant                            5.13 kB         131 kB
+├ ○ /register                            3.12 kB         144 kB
+└ ○ /unauthorized                        1.71 kB        96.8 kB
++ First Load JS shared by all            87.1 kB
+  ├ chunks/364-18f84f7355c1c128.js       31.6 kB
+  ├ chunks/618f8807-5b09ccff8c9217e8.js  53.6 kB
+  └ other shared chunks (total)          1.9 kB
+
+
+ƒ Middleware                             68.1 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+Done in 32.31s.
