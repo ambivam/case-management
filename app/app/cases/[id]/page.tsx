@@ -216,7 +216,7 @@ export default function CaseDetailPage({ params }: { params: { id: string } }) {
           {caseData.category && (
             <Badge variant="outline">{caseData.category.name}</Badge>
           )}
-          {caseData.tags.map((tag) => (
+          {caseData.tags?.map((tag) => (
             <Badge
               key={tag.id}
               variant="secondary"

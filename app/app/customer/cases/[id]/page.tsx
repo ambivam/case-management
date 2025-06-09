@@ -386,7 +386,7 @@ export default function CustomerCaseDetailPage() {
                   <div>
                     <h3 className="font-medium mb-2">Tags</h3>
                     <div className="flex flex-wrap gap-2">
-                      {caseData.tags.map(tag => (
+                      {caseData.tags?.map(tag => (
                         <Badge key={tag.id} variant="secondary" style={{ backgroundColor: tag.color }}>
                           {tag.name}
                         </Badge>
@@ -416,12 +416,12 @@ export default function CustomerCaseDetailPage() {
                       <div key={message.id} className="border rounded-lg p-4">
                         <div className="flex justify-between items-start mb-2">
                           <div>
-                            <p className="font-medium">{message.author?.name || message.user?.name || "Unknown User"}</p>
+                            <p className="font-medium">{message.user?.name || message.user?.name || "Unknown User"}</p>
                             <p className="text-xs text-muted-foreground">
                               {formatDistanceToNow(new Date(message.createdAt))} ago
                             </p>
                           </div>
-                          <Badge variant="outline">{message.author?.role || message.user?.role || "Unknown"}</Badge>
+                          <Badge variant="outline">{message.user?.role || message.user?.role || "Unknown"}</Badge>
                         </div>
                         <p className="whitespace-pre-wrap">{message.content}</p>
                       </div>
