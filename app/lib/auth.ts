@@ -2,7 +2,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
-import { prisma } from './db';
+import { prisma } from './prisma';
 
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';

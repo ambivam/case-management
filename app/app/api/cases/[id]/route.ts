@@ -1,6 +1,98 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/auth';
-import { prisma } from '@/lib/db';
+import { prisma } from '@/lib/prisma';
+
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    // Verify authentication
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    const data = await request.json();
+
+    // Find the case first to check permissions
+    const existingCase = await prisma.case.findUnique({
+      where: { id: params.id },
+      include: {
+        assignments: {
+          where: { userId: user.id }
+        }
+      }
+    });
+
+    if (!existingCase) {
+      return NextResponse.json(
+        { error: 'Case not found' },
+        { status: 404 }
+      );
+    }
+
+    // Check if user has permission to update this case
+    const hasPermission =
+      user.role === 'COMMERCIAL' ||
+      user.role === 'MERCHANT' ||
+      existingCase.creatorId === user.id ||
+      existingCase.assignments.length > 0;
+
+    if (!hasPermission) {
+      return NextResponse.json(
+        { error: 'You do not have permission to update this case' },
+        { status: 403 }
+      );
+    }
+
+    // Update the case
+    const updatedCase = await prisma.case.update({
+      where: { id: params.id },
+      data: {
+        title: data.title,
+        description: data.description,
+        status: data.status,
+        priority: data.priority,
+        type: data.type,
+        updatedAt: new Date(),
+      },
+      include: {
+        creator: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+          },
+        },
+        assignments: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return NextResponse.json(updatedCase);
+  } catch (error) {
+    console.error('Error updating case:', error);
+    return NextResponse.json(
+      { error: 'Failed to update case' },
+      { status: 500 }
+    );
+  }
+}
 
 export async function GET(
   request: NextRequest,
